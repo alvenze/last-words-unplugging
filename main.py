@@ -35,6 +35,9 @@ def check() -> int:
     if text != ENTRY:
         print(f"FAIL: content differs from ENTRY ({len(text)} chars vs {len(ENTRY)})")
         ok = False
+    if raw.endswith(b"\n"):
+        print("FAIL: trailing newline (entry is one line, no terminator)")
+        ok = False
     if not 1 <= len(text) <= 200:
         print(f"FAIL: length {len(text)} outside 1-200")
         ok = False
@@ -44,6 +47,7 @@ def check() -> int:
     if "\n" in text:
         print("FAIL: entry must be one line")
         ok = False
+    print(f"entry={text!r}")
     print(f"chars={len(text)} bytes={len(raw)} ok={ok}")
     return 0 if ok else 1
 
